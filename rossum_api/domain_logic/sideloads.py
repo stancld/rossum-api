@@ -13,12 +13,12 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
     from typing import Any
 
-    from rossum_api.types import Sideload
+    from rossum_api.types import JsonDict, Sideload
 
 
 def build_sideload_params(
     sideloads: Sequence[Sideload], content_schema_ids: Sequence[str]
-) -> dict:
+) -> JsonDict:
     """Build params used for sideloading.
 
     Arguments

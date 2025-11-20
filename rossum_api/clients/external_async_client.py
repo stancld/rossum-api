@@ -93,7 +93,7 @@ if TYPE_CHECKING:
         WorkspaceOrdering,
     )
     from rossum_api.models import Deserializer, JsonDict, ResponsePostProcessor
-    from rossum_api.types import HttpMethod, RossumApiType, Sideload
+    from rossum_api.types import AnnotationSideload, HttpMethod, RossumApiType, SchemaSideload
 
 
 class AsyncRossumAPIClient(
@@ -570,7 +570,10 @@ class AsyncRossumAPIClient(
 
     # ##### SCHEMAS #####
     async def list_schemas(
-        self, ordering: Sequence[SchemaOrdering] = (), **filters: Any
+        self,
+        ordering: Sequence[SchemaOrdering] = (),
+        sideloads: Sequence[SchemaSideload] = (),
+        **filters: Any,
     ) -> AsyncIterator[SchemaType]:
         """Retrieve all :class:`~rossum_api.models.schema.Schema` objects satisfying the specified filters.
 
@@ -578,6 +581,8 @@ class AsyncRossumAPIClient(
         ----------
         ordering
             List of object names. Their URLs are used for sorting the results
+        sideloads
+            List of additional objects to sideload.
         filters
             id: ID of a :class:`~rossum_api.models.schema.Schema`
 
@@ -585,13 +590,20 @@ class AsyncRossumAPIClient(
 
             queue: ID of a :class:`~rossum_api.models.queue.Queue`
 
+        Notes
+        -----
+        Beware that list schemas does not return schema content by default.
+        Use ``sideloads = ["content"]`` for that purpose.
+
         References
         ----------
         https://elis.rossum.ai/api/docs/#list-all-schemas.
 
         https://elis.rossum.ai/api/docs/#schema.
         """
-        async for s in self._http_client.fetch_all(Resource.Schema, ordering, **filters):
+        async for s in self._http_client.fetch_all(
+            Resource.Schema, ordering, sideloads, **filters
+        ):
             yield self._deserializer(Resource.Schema, s)
 
     async def retrieve_schema(self, schema_id: int) -> SchemaType:
@@ -740,7 +752,7 @@ class AsyncRossumAPIClient(
     async def list_annotations(
         self,
         ordering: Sequence[AnnotationOrdering] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         content_schema_ids: Sequence[str] = (),
         **filters: Any,
     ) -> AsyncIterator[AnnotationType]:
@@ -850,7 +862,7 @@ class AsyncRossumAPIClient(
         query: dict | None = None,
         query_string: dict | None = None,
         ordering: Sequence[AnnotationOrdering] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         **kwargs: Any,
     ) -> AsyncIterator[AnnotationType]:
         """Search for :class:`~rossum_api.models.annotation.Annotation` objects.
@@ -888,7 +900,7 @@ class AsyncRossumAPIClient(
             yield self._deserializer(Resource.Annotation, a)
 
     async def retrieve_annotation(
-        self, annotation_id: int, sideloads: Sequence[Sideload] = ()
+        self, annotation_id: int, sideloads: Sequence[AnnotationSideload] = ()
     ) -> AnnotationType:
         """Retrieve a single :class:`~rossum_api.models.annotation.Annotation` object.
 
@@ -915,7 +927,7 @@ class AsyncRossumAPIClient(
         annotation_id: int,
         predicate: Callable[[AnnotationType], bool],
         sleep_s: int = 3,
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
     ) -> AnnotationType:
         """Poll on Annotation until predicate is true.
 
@@ -1441,7 +1453,10 @@ class AsyncRossumAPIClient(
         return self._deserializer(Resource.Engine, engine)
 
     async def list_engines(
-        self, ordering: Sequence[str] = (), sideloads: Sequence[Sideload] = (), **filters: Any
+        self,
+        ordering: Sequence[str] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
+        **filters: Any,
     ) -> AsyncIterator[EngineType]:
         """https://elis.rossum.ai/api/docs/internal/#list-all-engines."""
         async for engine in self._http_client.fetch_all(
@@ -1905,7 +1920,9 @@ class AsyncRossumAPIClient(
     async def authenticate(self) -> None:  # noqa: D102
         await self._http_client._authenticate()
 
-    async def _sideload(self, resource: dict[str, Any], sideloads: Sequence[Sideload]) -> None:
+    async def _sideload(
+        self, resource: dict[str, Any], sideloads: Sequence[AnnotationSideload]
+    ) -> None:
         """Load sideloads manually.
 
         The API does not support sideloading when fetching a single resource, we need to l

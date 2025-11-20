@@ -13,7 +13,10 @@ HttpMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
 
 # Sideloads allow fetching related resources in a single request.
 # See https://elis.rossum.ai/api/docs/#webhook-events for more information.
-Sideload = Literal["content", "automation_blockers", "documents", "modifiers", "queues"]
+AnnotationSideload = Literal["content", "automation_blockers", "documents", "modifiers", "queues"]
+SchemaSideload = Literal["content"]
+
+Sideload = typing.TypeVar("Sideload", bound=AnnotationSideload | SchemaSideload)
 
 # Super type for use with deserialize_default
 RossumApiType = typing.TypeVar("RossumApiType")

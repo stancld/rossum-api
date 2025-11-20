@@ -8,6 +8,20 @@ from rossum_api.models.schema import Schema
 
 @pytest.fixture
 def dummy_schema():
+    """Schema without content (as returned by list_schemas without sideloads)."""
+    return {
+        "id": 31336,
+        "name": "Basic Schema",
+        "queues": ["https://elis.rossum.ai/api/v1/queues/8236"],
+        "url": "https://elis.rossum.ai/api/v1/schemas/31336",
+        "content": [],
+        "metadata": {},
+    }
+
+
+@pytest.fixture
+def dummy_schema_with_content():
+    """Schema with content (as returned by list_schemas with sideloads=['content'])."""
     return {
         "id": 31336,
         "name": "Basic Schema",
@@ -46,27 +60,41 @@ class TestSchemas:
         async for s in schemas:
             assert s == Schema(**dummy_schema)
 
-        http_client.fetch_all.assert_called_with(Resource.Schema, ())
+        http_client.fetch_all.assert_called_with(Resource.Schema, (), ())
 
-    async def test_retrieve_schema(self, elis_client, dummy_schema):
+    async def test_list_schemas_with_sideloads(
+        self, elis_client, dummy_schema_with_content, mock_generator
+    ):
         client, http_client = elis_client
-        http_client.fetch_one.return_value = dummy_schema
+        http_client.fetch_all.return_value = mock_generator(dummy_schema_with_content)
 
-        sid = dummy_schema["id"]
+        schemas = client.list_schemas(sideloads=["content"])
+
+        async for s in schemas:
+            assert s == Schema(**dummy_schema_with_content)
+            assert len(s.content) > 0  # Verify content is populated
+
+        http_client.fetch_all.assert_called_with(Resource.Schema, (), ["content"])
+
+    async def test_retrieve_schema(self, elis_client, dummy_schema_with_content):
+        client, http_client = elis_client
+        http_client.fetch_one.return_value = dummy_schema_with_content
+
+        sid = dummy_schema_with_content["id"]
         schema = await client.retrieve_schema(sid)
 
-        assert schema == Schema(**dummy_schema)
+        assert schema == Schema(**dummy_schema_with_content)
 
         http_client.fetch_one.assert_called_with(Resource.Schema, sid)
 
-    async def test_create_new_schema(self, elis_client, dummy_schema):
+    async def test_create_new_schema(self, elis_client, dummy_schema_with_content):
         client, http_client = elis_client
-        http_client.create.return_value = dummy_schema
+        http_client.create.return_value = dummy_schema_with_content
 
         data = {"name": "Test Schema", "content": []}
         schema = await client.create_new_schema(data)
 
-        assert schema == Schema(**dummy_schema)
+        assert schema == Schema(**dummy_schema_with_content)
 
         http_client.create.assert_called_with(Resource.Schema, data)
 
@@ -90,27 +118,39 @@ class TestSchemasSync:
         for s in schemas:
             assert s == Schema(**dummy_schema)
 
-        http_client.fetch_resources.assert_called_with(Resource.Schema, ())
+        http_client.fetch_resources.assert_called_with(Resource.Schema, (), ())
 
-    def test_retrieve_schema(self, elis_client_sync, dummy_schema):
+    def test_list_schemas_with_sideloads(self, elis_client_sync, dummy_schema_with_content):
         client, http_client = elis_client_sync
-        http_client.fetch_resource.return_value = dummy_schema
+        http_client.fetch_resources.return_value = iter((dummy_schema_with_content,))
 
-        sid = dummy_schema["id"]
+        schemas = client.list_schemas(sideloads=["content"])
+
+        for s in schemas:
+            assert s == Schema(**dummy_schema_with_content)
+            assert len(s.content) > 0  # Verify content is populated
+
+        http_client.fetch_resources.assert_called_with(Resource.Schema, (), ["content"])
+
+    def test_retrieve_schema(self, elis_client_sync, dummy_schema_with_content):
+        client, http_client = elis_client_sync
+        http_client.fetch_resource.return_value = dummy_schema_with_content
+
+        sid = dummy_schema_with_content["id"]
         schema = client.retrieve_schema(sid)
 
-        assert schema == Schema(**dummy_schema)
+        assert schema == Schema(**dummy_schema_with_content)
 
         http_client.fetch_resource.assert_called_with(Resource.Schema, sid)
 
-    def test_create_new_schema(self, elis_client_sync, dummy_schema):
+    def test_create_new_schema(self, elis_client_sync, dummy_schema_with_content):
         client, http_client = elis_client_sync
-        http_client.create.return_value = dummy_schema
+        http_client.create.return_value = dummy_schema_with_content
 
         data = {"name": "Test Schema", "content": []}
         schema = client.create_new_schema(data)
 
-        assert schema == Schema(**dummy_schema)
+        assert schema == Schema(**dummy_schema_with_content)
 
         http_client.create.assert_called_with(Resource.Schema, data)
 

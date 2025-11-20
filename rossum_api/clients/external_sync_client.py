@@ -93,7 +93,7 @@ if TYPE_CHECKING:
     )
     from rossum_api.dtos import Token, UserCredentials
     from rossum_api.models import Deserializer, JsonDict, ResponsePostProcessor
-    from rossum_api.types import HttpMethod, RossumApiType, Sideload
+    from rossum_api.types import AnnotationSideload, HttpMethod, RossumApiType, SchemaSideload
 
 
 class SyncRossumAPIClient(
@@ -515,9 +515,11 @@ class SyncRossumAPIClient(
         return self.retrieve_own_organization()
 
     # ##### SCHEMAS #####
-
     def list_schemas(
-        self, ordering: Sequence[SchemaOrdering] = (), **filters: Any
+        self,
+        ordering: Sequence[SchemaOrdering] = (),
+        sideloads: Sequence[SchemaSideload] = (),
+        **filters: Any,
     ) -> Iterator[SchemaType]:
         """Retrieve all :class:`~rossum_api.models.schema.Schema` objects satisfying the specified filters.
 
@@ -525,6 +527,8 @@ class SyncRossumAPIClient(
         ----------
         ordering
             List of object names. Their URLs are used for sorting the results
+        sideloads
+            List of additional objects to sideload.
         filters
             id: ID of a :class:`~rossum_api.models.schema.Schema`
 
@@ -532,13 +536,20 @@ class SyncRossumAPIClient(
 
             queue: ID of a :class:`~rossum_api.models.queue.Queue`
 
+        Notes
+        -----
+        Beware that list schemas does not return schema content by default.
+        Use ``sideloads = ["content"]`` for that purpose.
+
         References
         ----------
         https://elis.rossum.ai/api/docs/#list-all-schemas.
 
         https://elis.rossum.ai/api/docs/#schema.
         """
-        for s in self.internal_client.fetch_resources(Resource.Schema, ordering, **filters):
+        for s in self.internal_client.fetch_resources(
+            Resource.Schema, ordering, sideloads, **filters
+        ):
             yield self._deserializer(Resource.Schema, s)
 
     def retrieve_schema(self, schema_id: int) -> SchemaType:
@@ -672,7 +683,7 @@ class SyncRossumAPIClient(
     # ##### ANNOTATIONS #####
 
     def retrieve_annotation(
-        self, annotation_id: int, sideloads: Sequence[Sideload] = ()
+        self, annotation_id: int, sideloads: Sequence[AnnotationSideload] = ()
     ) -> AnnotationType:
         """Retrieve a single :class:`~rossum_api.models.annotation.Annotation` object.
 
@@ -697,7 +708,7 @@ class SyncRossumAPIClient(
     def list_annotations(
         self,
         ordering: Sequence[AnnotationOrdering] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         content_schema_ids: Sequence[str] = (),
         **filters: Any,
     ) -> Iterator[AnnotationType]:
@@ -808,7 +819,7 @@ class SyncRossumAPIClient(
         query: dict | None = None,
         query_string: dict | None = None,
         ordering: Sequence[AnnotationOrdering] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         **kwargs: Any,
     ) -> Iterator[AnnotationType]:
         """Search for :class:`~rossum_api.models.annotation.Annotation` objects.
@@ -849,7 +860,7 @@ class SyncRossumAPIClient(
         annotation_id: int,
         predicate: Callable[[AnnotationType], bool],
         sleep_s: int = 3,
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
     ) -> AnnotationType:
         """Poll on Annotation until predicate is true.
 
@@ -1374,7 +1385,10 @@ class SyncRossumAPIClient(
         return self._deserializer(Resource.Engine, engine)
 
     def list_engines(
-        self, ordering: Sequence[str] = (), sideloads: Sequence[Sideload] = (), **filters: Any
+        self,
+        ordering: Sequence[str] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
+        **filters: Any,
     ) -> Iterator[EngineType]:
         """Retrieve all :class:`~rossum_api.models.engine.Engine` objects satisfying the specified filters.
 

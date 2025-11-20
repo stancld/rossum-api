@@ -33,7 +33,7 @@ if typing.TYPE_CHECKING:
 
     from rossum_api.domain_logic.resources import Resource
     from rossum_api.models import ResponsePostProcessor
-    from rossum_api.types import HttpMethod, JsonDict, Sideload
+    from rossum_api.types import AnnotationSideload, HttpMethod, JsonDict
 
 
 RETRIED_HTTP_CODES = (408, 429, 500, 502, 503, 504)
@@ -97,7 +97,7 @@ class InternalAsyncClient:
         self,
         resource: Resource,
         ordering: Sequence[str] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         content_schema_ids: Sequence[str] = (),
         method: HttpMethod = "GET",
         max_pages: int | None = None,
@@ -144,7 +144,7 @@ class InternalAsyncClient:
         self,
         url: str,
         ordering: Sequence[str] = (),
-        sideloads: Sequence[Sideload] = (),
+        sideloads: Sequence[AnnotationSideload] = (),
         content_schema_ids: Sequence[str] = (),
         method: HttpMethod = "GET",
         max_pages: int | None = None,
@@ -209,7 +209,7 @@ class InternalAsyncClient:
         url: str,
         method: HttpMethod,
         query_params: dict[str, Any],
-        sideload_groups: Sequence[Sideload],
+        sideload_groups: Sequence[AnnotationSideload],
         json: JsonDict | None = None,
     ) -> tuple[list[dict[str, Any]], int]:
         data = await self.request_json(method, url, params=query_params, json=json)
