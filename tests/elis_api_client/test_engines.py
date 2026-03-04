@@ -13,7 +13,7 @@ TEST_ENGINE_ID = 123
 class TestEngine:
     @pytest.fixture
     def dummy_engine(self):
-        # https://rossum.app/api/docs/internal/#tag/Dedicated-Engine
+        # https://rossum.app/api/docs/openapi/api/dedicated-engine/
         return {
             "id": TEST_ENGINE_ID,
             "url": f"https://elis.rossum.ai/api/v1/engines/{TEST_ENGINE_ID}",
@@ -62,7 +62,7 @@ class TestEngine:
 class TestEngineFields:
     @pytest.fixture
     def dummy_engine_field(self):
-        # https://rossum.app/api/docs/internal/#tag/Engine-Field
+        # https://rossum.app/api/docs/openapi/api/engine-field/
         return {
             "id": 456,  # EngineField ID, not the Engine ID
             "url": f"https://elis.rossum.ai/api/v1/engine_fields/{TEST_ENGINE_ID}",
@@ -71,7 +71,7 @@ class TestEngineFields:
             "label": "Test engine field",
             "type": "string",
             "subtype": "alphanumeric",
-            "pre_trained_field_id": "document_id",  # https://rossum.app/api/docs/internal/#operation/engine_fields_pre_trained_fields
+            "pre_trained_field_id": "document_id",  # https://rossum.app/api/docs/openapi/api/engine-field/#list-pre-trained-fields
             "tabular": False,
             "multiline": "false",
         }

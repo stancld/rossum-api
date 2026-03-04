@@ -32,7 +32,7 @@ class EmailTemplate:
         True if user wants to send email automatically on the action, see ``type``.
     triggers
         URLs of the linked triggers.
-        Read more about `triggers <https://rossum.app/api/docs/#tag/Using-Triggers>`_.
+        Read more about `triggers <https://rossum.app/api/docs/openapi/guides/using-triggers/>`_.
     to
         List that contains information about recipients.
     cc
@@ -42,9 +42,9 @@ class EmailTemplate:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Email-Template
+    https://rossum.app/api/docs/openapi/api/email-template/
 
-    https://rossum.app/api/docs/#tag/Using-Triggers
+    https://rossum.app/api/docs/openapi/guides/using-triggers/
     """
 
     id: int

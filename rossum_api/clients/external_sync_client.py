@@ -179,9 +179,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_retrieve
+        https://rossum.app/api/docs/openapi/api/queue/#retrieve-queue
 
-        https://rossum.app/api/docs/#tag/Queue
+        https://rossum.app/api/docs/openapi/api/queue/
         """
         queue = self.internal_client.fetch_resource(Resource.Queue, queue_id)
         return self._deserializer(Resource.Queue, queue)
@@ -212,15 +212,15 @@ class SyncRossumAPIClient(
 
             locale: :class:`~rossum_api.models.queue.Queue` object locale.
 
-            dedicated_engine: ID of a `dedicated engine <https://rossum.app/api/docs/#tag/Dedicated-Engine>`_
+            dedicated_engine: ID of a `dedicated engine <https://rossum.app/api/docs/openapi/api/dedicated-engine/>`_
 
-            generic_engine: ID of a `generic engine <https://rossum.app/api/docs/#tag/Generic-Engine>`_
+            generic_engine: ID of a `generic engine <https://rossum.app/api/docs/openapi/api/generic-engine/>`_
 
             deleting: Boolean filter - queue is being deleted (``delete_after`` is set)
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_list
+        https://rossum.app/api/docs/openapi/api/queue/#list-queues
         """
         for q in self.internal_client.fetch_resources(Resource.Queue, ordering, **filters):
             yield self._deserializer(Resource.Queue, q)
@@ -235,9 +235,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_create
+        https://rossum.app/api/docs/openapi/api/queue/#create-queue
 
-        https://rossum.app/api/docs/#tag/Queue
+        https://rossum.app/api/docs/openapi/api/queue/
         """
         queue = self.internal_client.create(Resource.Queue, data)
         return self._deserializer(Resource.Queue, queue)
@@ -261,7 +261,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_delete
+        https://rossum.app/api/docs/openapi/api/queue/#delete-queue
         """
         return self.internal_client.delete(Resource.Queue, queue_id)
 
@@ -291,7 +291,7 @@ class SyncRossumAPIClient(
         values: dict[str, Any] | None = None,
         metadata: dict[str, Any] | None = None,
     ) -> list[int]:
-        """https://rossum.app/api/docs/#tag/Import-and-Export/Upload-API.
+        """https://rossum.app/api/docs/openapi/guides/import-export/#upload-api.
 
         Deprecated now, consider upload_document.
 
@@ -345,7 +345,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/uploads_create
+        https://rossum.app/api/docs/openapi/api/upload/#create-upload
         """
         url = f"uploads?queue={queue_id}"
         task_ids = self._import_document(url, files, values, metadata)
@@ -361,7 +361,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/uploads_retrieve
+        https://rossum.app/api/docs/openapi/api/upload/#retrieve-upload
         """
         upload = self.internal_client.fetch_resource(Resource.Upload, upload_id)
         return self._deserializer(Resource.Upload, upload)
@@ -400,7 +400,7 @@ class SyncRossumAPIClient(
                 ISO 8601 timestamp (e.g. ``export_failed_at_after=2019-11-14 12:00:00``).
             page_size
                 Number of the documents to be exported.
-                To be used together with ``page`` attribute. See `pagination <https://rossum.app/api/docs/#tag/Overview/Pagination>`_
+                To be used together with ``page`` attribute. See `pagination <https://rossum.app/api/docs/openapi/guides/overview/#pagination>`_
             page
                 Number of a page to be exported when using pagination.
                 Useful for exports of large amounts of data.
@@ -413,7 +413,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_export
+        https://rossum.app/api/docs/openapi/api/queue/#export-annotations
         """
         for chunk in self.internal_client.export(Resource.Queue, queue_id, "json", **filters):
             # JSON export can be translated directly to Annotation object
@@ -453,7 +453,7 @@ class SyncRossumAPIClient(
                 ISO 8601 timestamp (e.g. ``export_failed_at_after=2019-11-14 12:00:00``).
             page_size
                 Number of the documents to be exported.
-                To be used together with ``page`` attribute. See `pagination <https://rossum.app/api/docs/#tag/Overview/Pagination>`_
+                To be used together with ``page`` attribute. See `pagination <https://rossum.app/api/docs/openapi/guides/overview/#pagination>`_
             page
                 Number of a page to be exported when using pagination.
                 Useful for exports of large amounts of data.
@@ -466,7 +466,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/queues_export
+        https://rossum.app/api/docs/openapi/api/queue/#export-annotations
         """
         for chunk in self.internal_client.export(
             Resource.Queue,
@@ -494,7 +494,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/organizations_list
+        https://rossum.app/api/docs/openapi/api/organization/#list-organizations
         """
         for o in self.internal_client.fetch_resources(Resource.Organization, ordering, **filters):
             yield self._deserializer(Resource.Organization, o)
@@ -509,7 +509,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/organizations_retrieve
+        https://rossum.app/api/docs/openapi/api/organization/#retrieve-organization
         """
         organization = self.internal_client.fetch_resource(Resource.Organization, org_id)
         return self._deserializer(Resource.Organization, organization)
@@ -539,7 +539,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/organizations_limits
+        https://rossum.app/api/docs/openapi/api/organization/
         """
         url = build_organization_limits_url(org_id)
         response = self.internal_client.request_json("GET", url)
@@ -566,7 +566,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#tag/Organization-Group/operation/organization_groups_list
+        https://rossum.app/api/docs/openapi/api/organization-group/#list-organization-groups
         """
         for og in self.internal_client.fetch_resources(
             Resource.OrganizationGroup, ordering, **filters
@@ -583,7 +583,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#tag/Organization-Group/operation/organization_groups_retrieve
+        https://rossum.app/api/docs/openapi/api/organization-group/#retrieve-organization-group
         """
         org_group = self.internal_client.fetch_resource(Resource.OrganizationGroup, org_group_id)
         return self._deserializer(Resource.OrganizationGroup, org_group)
@@ -608,9 +608,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/schemas_list
+        https://rossum.app/api/docs/openapi/api/schema/#list-schemas
 
-        https://rossum.app/api/docs/#tag/Schema
+        https://rossum.app/api/docs/openapi/api/schema/
         """
         for s in self.internal_client.fetch_resources(Resource.Schema, ordering, **filters):
             yield self._deserializer(Resource.Schema, s)
@@ -625,9 +625,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/schemas_retrieve
+        https://rossum.app/api/docs/openapi/api/schema/#retrieve-schema
 
-        https://rossum.app/api/docs/#tag/Schema
+        https://rossum.app/api/docs/openapi/api/schema/
         """
         schema: dict[Any, Any] = self.internal_client.fetch_resource(Resource.Schema, schema_id)
         return self._deserializer(Resource.Schema, schema)
@@ -642,9 +642,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/schemas_create
+        https://rossum.app/api/docs/openapi/api/schema/#create-schema
 
-        https://rossum.app/api/docs/#tag/Schema
+        https://rossum.app/api/docs/openapi/api/schema/
         """
         schema = self.internal_client.create(Resource.Schema, data)
         return self._deserializer(Resource.Schema, schema)
@@ -665,9 +665,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/schemas_delete
+        https://rossum.app/api/docs/openapi/api/schema/#delete-schema
 
-        https://rossum.app/api/docs/#tag/Schema
+        https://rossum.app/api/docs/openapi/api/schema/
         """
         return self.internal_client.delete(Resource.Schema, schema_id)
 
@@ -706,9 +706,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/users_list
+        https://rossum.app/api/docs/openapi/api/user/#list-users
 
-        https://rossum.app/api/docs/#tag/User
+        https://rossum.app/api/docs/openapi/api/user/
         """
         for u in self.internal_client.fetch_resources(Resource.User, ordering, **filters):
             yield self._deserializer(Resource.User, u)
@@ -723,9 +723,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/users_retrieve
+        https://rossum.app/api/docs/openapi/api/user/#retrieve-user
 
-        https://rossum.app/api/docs/#tag/User
+        https://rossum.app/api/docs/openapi/api/user/
         """
         user = self.internal_client.fetch_resource(Resource.User, user_id)
         return self._deserializer(Resource.User, user)
@@ -739,7 +739,7 @@ class SyncRossumAPIClient(
         raise NotImplementedError
 
     def create_new_user(self, data: dict[str, Any]) -> UserType:
-        """https://rossum.app/api/docs/#operation/users_create."""
+        """https://rossum.app/api/docs/openapi/api/user/#create-user."""
         user = self.internal_client.create(Resource.User, data)
         return self._deserializer(Resource.User, user)
 
@@ -759,9 +759,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_retrieve
+        https://rossum.app/api/docs/openapi/api/annotation/#retrieve-annotation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         annotation = self.internal_client.fetch_resource(Resource.Annotation, annotation_id)
         if sideloads:
@@ -866,9 +866,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_list
+        https://rossum.app/api/docs/openapi/api/annotation/#list-annotations
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         validate_list_annotations_params(sideloads, content_schema_ids)
 
@@ -902,9 +902,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_search
+        https://rossum.app/api/docs/openapi/api/annotation/#search-annotations
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         validate_search_params(query, query_string)
         search_params = build_search_params(query, query_string)
@@ -961,7 +961,7 @@ class SyncRossumAPIClient(
     # ##### TASKS #####
 
     def retrieve_task(self, task_id: int) -> TaskType:
-        """https://rossum.app/api/docs/#operation/tasks_retrieve."""
+        """https://rossum.app/api/docs/openapi/api/task/#retrieve-task."""
         task = self.internal_client.fetch_resource(
             Resource.Task, task_id, request_params={"no_redirect": "True"}
         )
@@ -1003,9 +1003,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_start
+        https://rossum.app/api/docs/openapi/api/annotation/#start-validation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         self.internal_client.request_json(
             "POST", build_resource_start_url(Resource.Annotation, annotation_id)
@@ -1023,9 +1023,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_update
+        https://rossum.app/api/docs/openapi/api/annotation/#update-annotation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         annotation = self.internal_client.replace(Resource.Annotation, annotation_id, data)
         return self._deserializer(Resource.Annotation, annotation)
@@ -1042,9 +1042,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_partial_update
+        https://rossum.app/api/docs/openapi/api/annotation/#partial-update-annotation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         annotation = self.internal_client.update(Resource.Annotation, annotation_id, data)
         return self._deserializer(Resource.Annotation, annotation)
@@ -1063,9 +1063,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_content_operations
+        https://rossum.app/api/docs/openapi/api/annotation/
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         self.internal_client.request_json(
             "POST",
@@ -1083,9 +1083,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_confirm
+        https://rossum.app/api/docs/openapi/api/annotation/#confirm-validation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         self.internal_client.request_json(
             "POST", build_resource_confirm_url(Resource.Annotation, annotation_id)
@@ -1101,9 +1101,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_create
+        https://rossum.app/api/docs/openapi/api/annotation/#create-annotation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         annotation = self.internal_client.create(Resource.Annotation, data)
         return self._deserializer(Resource.Annotation, annotation)
@@ -1118,9 +1118,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_delete_status
+        https://rossum.app/api/docs/openapi/api/annotation/#purge-deleted-annotations
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         self.internal_client.request(
             "POST", url=build_resource_delete_url(Resource.Annotation, annotation_id)
@@ -1136,9 +1136,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/annotations_cancel
+        https://rossum.app/api/docs/openapi/api/annotation/#cancel-validation
 
-        https://rossum.app/api/docs/#tag/Annotation
+        https://rossum.app/api/docs/openapi/api/annotation/
         """
         self.internal_client.request(
             "POST", url=build_resource_cancel_url(Resource.Annotation, annotation_id)
@@ -1156,9 +1156,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/documents_retrieve
+        https://rossum.app/api/docs/openapi/api/document/#retrieve-document
 
-        https://rossum.app/api/docs/#tag/Document
+        https://rossum.app/api/docs/openapi/api/document/
         """
         document: dict[Any, Any] = self.internal_client.fetch_resource(
             Resource.Document, document_id
@@ -1175,9 +1175,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/documents_content_retrieve
+        https://rossum.app/api/docs/openapi/api/document/#retrieve-document-content
 
-        https://rossum.app/api/docs/#tag/Document
+        https://rossum.app/api/docs/openapi/api/document/
         """
         document_content = self.internal_client.request(
             "GET", url=build_resource_content_url(Resource.Document, document_id)
@@ -1206,9 +1206,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/documents_create
+        https://rossum.app/api/docs/openapi/api/document/#create-document
 
-        https://rossum.app/api/docs/#tag/Document
+        https://rossum.app/api/docs/openapi/api/document/
         """
         files = build_create_document_params(file_name, file_data, metadata, parent)
         document = self.internal_client.request_json(
@@ -1240,9 +1240,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_list
+        https://rossum.app/api/docs/openapi/api/document-relation/#list-document-relations
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         for dr in self.internal_client.fetch_resources(
             Resource.DocumentRelation, ordering, **filters
@@ -1259,9 +1259,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_retrieve
+        https://rossum.app/api/docs/openapi/api/document-relation/#retrieve-document-relation
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         document_relation = self.internal_client.fetch_resource(
             Resource.DocumentRelation, document_relation_id
@@ -1279,9 +1279,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_create
+        https://rossum.app/api/docs/openapi/api/document-relation/#create-document-relation
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         document_relation = self.internal_client.create(Resource.DocumentRelation, data)
 
@@ -1301,9 +1301,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_update
+        https://rossum.app/api/docs/openapi/api/document-relation/#update-document-relation
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         document_relation = self.internal_client.replace(
             Resource.DocumentRelation, document_relation_id, data
@@ -1325,9 +1325,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_partial_update
+        https://rossum.app/api/docs/openapi/api/document-relation/#partial-update-document-relation
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         document_relation = self.internal_client.update(
             Resource.DocumentRelation, document_relation_id, data
@@ -1345,9 +1345,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/document_relations_delete
+        https://rossum.app/api/docs/openapi/api/document-relation/#delete-document-relation
 
-        https://rossum.app/api/docs/#tag/Document-Relation
+        https://rossum.app/api/docs/openapi/api/document-relation/
         """
         self.internal_client.delete(Resource.DocumentRelation, document_relation_id)
 
@@ -1375,9 +1375,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/relations_list
+        https://rossum.app/api/docs/openapi/api/relation/#list-relations
 
-        https://rossum.app/api/docs/#tag/Relation
+        https://rossum.app/api/docs/openapi/api/relation/
         """
         for r in self.internal_client.fetch_resources(Resource.Relation, ordering, **filters):
             yield self._deserializer(Resource.Relation, r)
@@ -1392,9 +1392,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/relations_create
+        https://rossum.app/api/docs/openapi/api/relation/#create-relation
 
-        https://rossum.app/api/docs/#tag/Relation
+        https://rossum.app/api/docs/openapi/api/relation/
         """
         relation = self.internal_client.create(Resource.Relation, data)
 
@@ -1420,9 +1420,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/workspaces_list
+        https://rossum.app/api/docs/openapi/api/workspace/#list-workspaces
 
-        https://rossum.app/api/docs/#tag/Workspace
+        https://rossum.app/api/docs/openapi/api/workspace/
         """
         for w in self.internal_client.fetch_resources(Resource.Workspace, ordering, **filters):
             yield self._deserializer(Resource.Workspace, w)
@@ -1437,9 +1437,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/workspaces_retrieve
+        https://rossum.app/api/docs/openapi/api/workspace/#retrieve-workspace
 
-        https://rossum.app/api/docs/#tag/Workspace
+        https://rossum.app/api/docs/openapi/api/workspace/
         """
         workspace = self.internal_client.fetch_resource(Resource.Workspace, workspace_id)
 
@@ -1455,9 +1455,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/workspaces_create
+        https://rossum.app/api/docs/openapi/api/workspace/#create-workspace
 
-        https://rossum.app/api/docs/#tag/Workspace
+        https://rossum.app/api/docs/openapi/api/workspace/
         """
         workspace = self.internal_client.create(Resource.Workspace, data)
 
@@ -1473,9 +1473,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/workspaces_delete
+        https://rossum.app/api/docs/openapi/api/workspace/#delete-workspace
 
-        https://rossum.app/api/docs/#tag/Workspace
+        https://rossum.app/api/docs/openapi/api/workspace/
         """
         return self.internal_client.delete(Resource.Workspace, workspace_id)
 
@@ -1491,9 +1491,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/dedicated_engines_retrieve
+        https://rossum.app/api/docs/openapi/api/dedicated-engine/#retrieve-dedicated-engine
 
-        https://rossum.app/api/docs/#tag/Dedicated-Engine
+        https://rossum.app/api/docs/openapi/api/dedicated-engine/
         """
         engine = self.internal_client.fetch_resource(Resource.Engine, engine_id)
         return self._deserializer(Resource.Engine, engine)
@@ -1518,9 +1518,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/internal/#operation/dedicated_engines_list
+        https://rossum.app/api/docs/openapi/api/dedicated-engine/#list-dedicated-engines
 
-        https://rossum.app/api/docs/#tag/Dedicated-Engine
+        https://rossum.app/api/docs/openapi/api/dedicated-engine/
         """
         for c in self.internal_client.fetch_resources(
             Resource.Engine, ordering, sideloads, **filters
@@ -1537,9 +1537,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/internal/#tag/Engine-Field
+        https://rossum.app/api/docs/openapi/api/engine-field/
 
-        https://rossum.app/api/docs/internal/#tag/Engine-Field
+        https://rossum.app/api/docs/openapi/api/engine-field/
         """
         for engine_field in self.internal_client.fetch_resources(
             Resource.EngineField, engine=engine_id
@@ -1547,7 +1547,7 @@ class SyncRossumAPIClient(
             yield self._deserializer(Resource.EngineField, engine_field)
 
     def retrieve_engine_queues(self, engine_id: int) -> Iterator[QueueType]:
-        """https://rossum.app/api/docs/internal/#operation/queues_list."""
+        """https://rossum.app/api/docs/openapi/api/queue/#list-queues."""
         for queue in self.internal_client.fetch_resources(Resource.Queue, engine=engine_id):
             yield self._deserializer(Resource.Queue, queue)
 
@@ -1563,9 +1563,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/inboxes_create
+        https://rossum.app/api/docs/openapi/api/inbox/#create-inbox
 
-        https://rossum.app/api/docs/#tag/Inbox
+        https://rossum.app/api/docs/openapi/api/inbox/
         """
         inbox = self.internal_client.create(Resource.Inbox, data)
         return self._deserializer(Resource.Inbox, inbox)
@@ -1581,9 +1581,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/emails_retrieve
+        https://rossum.app/api/docs/openapi/api/email/#retrieve-email
 
-        https://rossum.app/api/docs/#tag/Email
+        https://rossum.app/api/docs/openapi/api/email/
         """
         email = self.internal_client.fetch_resource(Resource.Email, email_id)
 
@@ -1613,9 +1613,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/emails_import
+        https://rossum.app/api/docs/openapi/api/email/#import-email
 
-        https://rossum.app/api/docs/#tag/Email
+        https://rossum.app/api/docs/openapi/api/email/
         """
         response = self.internal_client.request_json(
             "POST",
@@ -1646,9 +1646,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/email_templates_list
+        https://rossum.app/api/docs/openapi/api/email-template/#list-email-templates
 
-        https://rossum.app/api/docs/#tag/Email-Template
+        https://rossum.app/api/docs/openapi/api/email-template/
         """
         for c in self.internal_client.fetch_resources(Resource.EmailTemplate, ordering, **filters):
             yield self._deserializer(Resource.EmailTemplate, c)
@@ -1663,9 +1663,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/email_templates_retrieve
+        https://rossum.app/api/docs/openapi/api/email-template/#retrieve-email-template
 
-        https://rossum.app/api/docs/#tag/Email-Template
+        https://rossum.app/api/docs/openapi/api/email-template/
         """
         email_template = self.internal_client.fetch_resource(
             Resource.EmailTemplate, email_template_id
@@ -1682,9 +1682,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/email_templates_create
+        https://rossum.app/api/docs/openapi/api/email-template/#create-email-template
 
-        https://rossum.app/api/docs/#tag/Email-Template
+        https://rossum.app/api/docs/openapi/api/email-template/
         """
         email_template = self.internal_client.create(Resource.EmailTemplate, data)
         return self._deserializer(Resource.EmailTemplate, email_template)
@@ -1709,9 +1709,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/connectors_list
+        https://rossum.app/api/docs/openapi/api/connector/#list-connectors
 
-        https://rossum.app/api/docs/#tag/Connector
+        https://rossum.app/api/docs/openapi/api/connector/
         """
         for c in self.internal_client.fetch_resources(Resource.Connector, ordering, **filters):
             yield self._deserializer(Resource.Connector, c)
@@ -1726,9 +1726,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/connectors_retrieve
+        https://rossum.app/api/docs/openapi/api/connector/#retrieve-connector
 
-        https://rossum.app/api/docs/#tag/Connector
+        https://rossum.app/api/docs/openapi/api/connector/
         """
         connector = self.internal_client.fetch_resource(Resource.Connector, connector_id)
         return self._deserializer(Resource.Connector, connector)
@@ -1743,9 +1743,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/connectors_create
+        https://rossum.app/api/docs/openapi/api/connector/#create-connector
 
-        https://rossum.app/api/docs/#tag/Connector
+        https://rossum.app/api/docs/openapi/api/connector/
         """
         connector = self.internal_client.create(Resource.Connector, data)
         return self._deserializer(Resource.Connector, connector)
@@ -1777,13 +1777,13 @@ class SyncRossumAPIClient(
             config_app_url:
 
             extension_source: Import source of the extension.
-            For more, see `Extension sources <https://rossum.app/api/docs/#tag/Extensions>`_
+            For more, see `Extension sources <https://rossum.app/api/docs/openapi/guides/extensions/>`_
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_list
+        https://rossum.app/api/docs/openapi/api/hook/#list-hooks
 
-        https://rossum.app/api/docs/#tag/Hook
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         for h in self.internal_client.fetch_resources(Resource.Hook, ordering, **filters):
             yield self._deserializer(Resource.Hook, h)
@@ -1798,9 +1798,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_retrieve
+        https://rossum.app/api/docs/openapi/api/hook/#retrieve-hook
 
-        https://rossum.app/api/docs/#tag/Hook
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         hook = self.internal_client.fetch_resource(Resource.Hook, hook_id)
         return self._deserializer(Resource.Hook, hook)
@@ -1815,9 +1815,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_create
+        https://rossum.app/api/docs/openapi/api/hook/#create-hook
 
-        https://rossum.app/api/docs/#tag/Hook
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         hook = self.internal_client.create(Resource.Hook, data)
         return self._deserializer(Resource.Hook, hook)
@@ -1834,9 +1834,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_partial_update
+        https://rossum.app/api/docs/openapi/api/hook/#partial-update-hook
 
-        https://rossum.app/api/docs/#tag/Hook
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         hook = self.internal_client.update(Resource.Hook, hook_id, data)
         return self._deserializer(Resource.Hook, hook)
@@ -1851,9 +1851,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_delete
+        https://rossum.app/api/docs/openapi/api/hook/#delete-hook
 
-        https://rossum.app/api/docs/#tag/Hook
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         return self.internal_client.delete(Resource.Hook, hook_id)
 
@@ -1903,7 +1903,7 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hooks_logs_list
+        https://rossum.app/api/docs/openapi/api/hook/
         """
         for d in self.internal_client.fetch_resources(Resource.HookRunData, **filters):
             yield self._deserializer(Resource.HookRunData, d)
@@ -1926,9 +1926,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hook_templates_list
+        https://rossum.app/api/docs/openapi/api/hook-template/#list-hook-templates
 
-        https://rossum.app/api/docs/#tag/Hook-Template
+        https://rossum.app/api/docs/openapi/api/hook-template/
         """
         for ht in self.internal_client.fetch_resources(Resource.HookTemplate, **filters):
             yield self._deserializer(Resource.HookTemplate, ht)
@@ -1943,9 +1943,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/hook_templates_retrieve
+        https://rossum.app/api/docs/openapi/api/hook-template/#retrieve-hook-template
 
-        https://rossum.app/api/docs/#tag/Hook-Template
+        https://rossum.app/api/docs/openapi/api/hook-template/
         """
         hook_template = self.internal_client.fetch_resource(
             Resource.HookTemplate, hook_template_id
@@ -1975,9 +1975,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/rules_list
+        https://rossum.app/api/docs/openapi/api/rule/#list-rules
 
-        https://rossum.app/api/docs/#tag/Rule
+        https://rossum.app/api/docs/openapi/api/rule/
         """
         for r in self.internal_client.fetch_resources(Resource.Rule, ordering, **filters):
             yield self._deserializer(Resource.Rule, r)
@@ -1992,9 +1992,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/rules_retrieve
+        https://rossum.app/api/docs/openapi/api/rule/#retrieve-rule
 
-        https://rossum.app/api/docs/#tag/Rule
+        https://rossum.app/api/docs/openapi/api/rule/
         """
         rule = self.internal_client.fetch_resource(Resource.Rule, rule_id)
         return self._deserializer(Resource.Rule, rule)
@@ -2009,9 +2009,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/rules_create
+        https://rossum.app/api/docs/openapi/api/rule/#create-rule
 
-        https://rossum.app/api/docs/#tag/Rule
+        https://rossum.app/api/docs/openapi/api/rule/
         """
         rule = self.internal_client.create(Resource.Rule, data)
         return self._deserializer(Resource.Rule, rule)
@@ -2028,9 +2028,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/rules_update
+        https://rossum.app/api/docs/openapi/api/rule/#update-rule
 
-        https://rossum.app/api/docs/#tag/Rule
+        https://rossum.app/api/docs/openapi/api/rule/
         """
         rule = self.internal_client.update(Resource.Rule, rule_id, data)
         return self._deserializer(Resource.Rule, rule)
@@ -2045,9 +2045,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/rules_delete
+        https://rossum.app/api/docs/openapi/api/rule/#delete-rule
 
-        https://rossum.app/api/docs/#tag/Rule
+        https://rossum.app/api/docs/openapi/api/rule/
         """
         return self.internal_client.delete(Resource.Rule, rule_id)
 
@@ -2068,9 +2068,9 @@ class SyncRossumAPIClient(
 
         References
         ----------
-        https://rossum.app/api/docs/#operation/user_roles_list
+        https://rossum.app/api/docs/openapi/api/user-role/#list-user-roles
 
-        https://rossum.app/api/docs/#tag/User-Role
+        https://rossum.app/api/docs/openapi/api/user-role/
         """
         for g in self.internal_client.fetch_resources(Resource.Group, ordering, **filters):
             yield self._deserializer(Resource.Group, g)

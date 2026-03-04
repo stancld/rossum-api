@@ -34,7 +34,7 @@ class Workspace:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Workspace
+    https://rossum.app/api/docs/openapi/api/workspace/
     """
 
     id: int

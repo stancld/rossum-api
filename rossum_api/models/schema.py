@@ -89,7 +89,7 @@ class Datapoint(Node["Multivalue | Section | Tuple"]):
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Document-Schema
+    https://rossum.app/api/docs/openapi/api/schema/
     """
 
     id: str
@@ -186,7 +186,7 @@ class Multivalue(Node["Section"]):
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Document-Schema
+    https://rossum.app/api/docs/openapi/api/schema/
     """
 
     id: str
@@ -260,7 +260,7 @@ class Tuple(Node["Multivalue"]):
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Document-Schema
+    https://rossum.app/api/docs/openapi/api/schema/
     """
 
     id: str
@@ -314,7 +314,7 @@ class Section(Node["Schema"]):
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Document-Schema
+    https://rossum.app/api/docs/openapi/api/schema/
     """
 
     id: str
@@ -365,7 +365,7 @@ class Section(Node["Schema"]):
 class Schema(Node):
     """Schema specifies the set of datapoints that are extracted from the document.
 
-    For more information see `Document Schema <https://rossum.app/api/docs/#tag/Document-Schema>`_.
+    For more information see `Document Schema <https://rossum.app/api/docs/openapi/api/schema/>`_.
 
     Attributes
     ----------
@@ -378,16 +378,16 @@ class Schema(Node):
     url
         URL of the schema.
     content
-        List of sections (top-level schema objects, see `Document Schema <https://rossum.app/api/docs/#tag/Document-Schema>`_
+        List of sections (top-level schema objects, see `Document Schema <https://rossum.app/api/docs/openapi/api/schema/>`_
         for description of schema).
     metadata
         Client data.
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Schema
+    https://rossum.app/api/docs/openapi/api/schema/
 
-    https://rossum.app/api/docs/#tag/Document-Schema
+    https://rossum.app/api/docs/openapi/api/schema/
     """
 
     id: int

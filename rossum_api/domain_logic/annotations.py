@@ -30,7 +30,7 @@ def validate_list_annotations_params(
 def get_http_method_for_annotation_export(**filters: Any) -> HttpMethod:
     """to_status filter requires a different HTTP method.
 
-    https://rossum.app/api/docs/#operation/queues_export
+    https://rossum.app/api/docs/openapi/api/queue/#export-annotations
     """
     return "POST" if "to_status" in filters else "GET"
 

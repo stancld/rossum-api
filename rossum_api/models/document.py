@@ -42,7 +42,7 @@ class Document:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Document
+    https://rossum.app/api/docs/openapi/api/document/
     """
 
     id: int

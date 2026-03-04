@@ -67,7 +67,7 @@ class HookTemplate:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Hook-Template
+    https://rossum.app/api/docs/openapi/api/hook-template/
     """
 
     name: str

@@ -48,7 +48,7 @@ class ShowMessagePayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     type: ShowMessageType
@@ -69,7 +69,7 @@ class AddAutomationBlockerPayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     content: str
@@ -87,7 +87,7 @@ class ChangeStatusPayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     method: ChangeStatusMethod
@@ -106,7 +106,7 @@ class ChangeQueuePayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     queue_id: int
@@ -124,7 +124,7 @@ class LabelsPayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     labels: list[str] = field(default_factory=list)
@@ -146,7 +146,7 @@ class SchemaIdsPayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     schema_ids: list[str] = field(default_factory=list)
@@ -168,7 +168,7 @@ class AddValidationSourcePayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     schema_id: str
@@ -200,7 +200,7 @@ class SendEmailPayload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     email_template: str | None = None
@@ -263,18 +263,18 @@ class RuleAction:
     enabled
         If False the action is disabled (default: True).
     type
-        Type of action. See `Rule actions <https://rossum.app/api/docs/#tag/Rule>`_
+        Type of action. See `Rule actions <https://rossum.app/api/docs/openapi/api/rule/>`_
         for the list of possible actions.
     payload
         Action payload. Structure depends on the action type.
-        See `Rule actions <https://rossum.app/api/docs/#tag/Rule>`_ for details.
+        See `Rule actions <https://rossum.app/api/docs/openapi/api/rule/>`_ for details.
     event
         Actions are configured to be executed on a specific event.
-        See `Trigger events <https://rossum.app/api/docs/#tag/Using-Triggers/Trigger-Event-Types>`_.
+        See `Trigger events <https://rossum.app/api/docs/openapi/guides/using-triggers/#trigger-event-types>`_.
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     id: str
@@ -345,7 +345,7 @@ class Rule:
         URL of the :class:`~rossum_api.models.schema.Schema` the rule belongs to.
     trigger_condition
         A condition for triggering the rule's actions.
-        This is a formula evaluated by `Rossum TxScript <https://rossum.app/api/docs/#tag/Rossum-Transaction-Scripts>`_.
+        This is a formula evaluated by `Rossum TxScript <https://rossum.app/api/docs/openapi/guides/rossum-transaction-scripts/>`_.
         Note that trigger condition must evaluate strictly to ``"True"``,
         truthy values are not enough to trigger the execution of actions.
         Wrap your condition with ``bool(your_condition)`` if necessary.
@@ -363,11 +363,11 @@ class Rule:
         Signals whether the rule is automatically updated from the linked template.
     actions
         List of :class:`~rossum_api.models.rule.RuleAction` objects.
-        See `Rule actions <https://rossum.app/api/docs/#tag/Rule>`_.
+        See `Rule actions <https://rossum.app/api/docs/openapi/api/rule/>`_.
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Rule
+    https://rossum.app/api/docs/openapi/api/rule/
     """
 
     id: int

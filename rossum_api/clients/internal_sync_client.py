@@ -146,7 +146,7 @@ class InternalSyncClient:  # noqa: D101
         """Retrieve a single object in a specific resource.
 
         Allows passing extra params specifically to allow disabling redirects feature of Tasks.
-        See https://rossum.app/api/docs/#tag/Task.
+        See https://rossum.app/api/docs/openapi/api/task/.
         If redirects are desired, our raise_for_status wrapper must account for that.
         """
         return self.request_json("GET", build_url(resource, id_), params=request_params)

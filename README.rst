@@ -30,7 +30,7 @@ Rossum API
 .. |license| image:: https://img.shields.io/pypi/l/rossum.svg
    :alt: MIT licence
 
-**rossum-api** provides Python programmatic access to the `Rossum API <https://api.elis.rossum.ai/docs>`_ and other useful tooling
+**rossum-api** provides Python programmatic access to the `Rossum API <https://rossum.app/api/docs>`_ and other useful tooling
 enabling seamless integration of the Rossum platform into Python applications.
 
 It is a replacement for `Rossum package <https://github.com/rossumai/rossum>`_. In case of any missing functionality,
