@@ -85,7 +85,7 @@ class TestE2E:
                 await client.delete_workspace(workspace.id)
 
     async def test_create_upload(self):
-        """An idea for potential E2E test for https://rossum.app/api/docs/#tag/Upload."""
+        """An idea for potential E2E test for https://rossum.app/api/docs/openapi/api/upload/."""
         workspace: Workspace | None = None
         queue: Queue | None = None
         schema: Schema | None = None

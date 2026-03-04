@@ -33,7 +33,7 @@ class Upload:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Upload
+    https://rossum.app/api/docs/openapi/api/upload/
     """
 
     id: int

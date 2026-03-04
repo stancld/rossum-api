@@ -29,7 +29,7 @@ class Annotation:
     url
         URL of the annotation object.
     status
-        Current status of the annotation. See `Annotation Lifecycle <https://rossum.app/api/docs/#tag/Annotation-Lifecycle>`_
+        Current status of the annotation. See `Annotation Lifecycle <https://rossum.app/api/docs/openapi/guides/annotation-lifecycle/>`_
         for possible values.
     schema
         URL of the schema object.
@@ -124,7 +124,7 @@ class Annotation:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Annotation
+    https://rossum.app/api/docs/openapi/api/annotation/
     """
 
     url: str

@@ -35,7 +35,7 @@ class OrganizationGroup:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Organization-Group
+    https://rossum.app/api/docs/openapi/api/organization-group/
     """
 
     id: int

@@ -51,7 +51,7 @@ class Relation:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Relation
+    https://rossum.app/api/docs/openapi/api/relation/
     """
 
     id: int

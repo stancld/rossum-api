@@ -53,7 +53,7 @@ class User:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/User
+    https://rossum.app/api/docs/openapi/api/user/
     """
 
     id: int

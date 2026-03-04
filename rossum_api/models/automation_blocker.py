@@ -42,7 +42,7 @@ class AutomationBlockerContent:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Automation-Blocker
+    https://rossum.app/api/docs/openapi/api/automation-blocker/
     """
 
     level: str
@@ -70,7 +70,7 @@ class AutomationBlocker:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Automation-Blocker
+    https://rossum.app/api/docs/openapi/api/automation-blocker/
     """
 
     id: int

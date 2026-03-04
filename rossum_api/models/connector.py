@@ -41,7 +41,7 @@ class Connector:
 
     References
     ----------
-    https://rossum.app/api/docs/#tag/Connector
+    https://rossum.app/api/docs/openapi/api/connector/
     """
 
     id: int
