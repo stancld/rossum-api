@@ -1,6 +1,34 @@
 # CHANGELOG
 
 
+## v3.12.0 (2026-03-17)
+
+### Bug Fixes
+
+- Add schema_id field to SchemaIdsPayload
+  ([`07dd787`](https://github.com/rossumai/rossum-api/commit/07dd78734cabf65c178f05f066edf8262f2cdd85))
+
+- Expand AddValidationSourcePayload with schema_ids and multivalue_child_id
+  ([`413bddc`](https://github.com/rossumai/rossum-api/commit/413bddc5cf54e250db30665b287f44b27f27b537))
+
+- Handle unknown action types gracefully by falling back to dict
+  ([`d5e8980`](https://github.com/rossumai/rossum-api/commit/d5e8980bb1d9afb6a6cf08b86a68b49bf8b10b2a))
+
+- Separate AddRemoveLabelPayload into distinct class with condition
+  ([`4c563d6`](https://github.com/rossumai/rossum-api/commit/4c563d63437704ab337d710307c1bde0f286317a))
+
+- Separate ShowHideFieldPayload into distinct class with condition
+  ([`c2401f9`](https://github.com/rossumai/rossum-api/commit/c2401f9b49661d0bad6c6a1e385ee4fef5af4bb5))
+
+- Update ChangeQueuePayload to use queue URL instead of queue_id
+  ([`6f520c4`](https://github.com/rossumai/rossum-api/commit/6f520c48083f19f6e3aa9f67722e500bce045691))
+
+### Features
+
+- Add CustomActionPayload for custom rule action
+  ([`4a47e53`](https://github.com/rossumai/rossum-api/commit/4a47e5337f9d2aed2532755359a3e0f634ca7c10))
+
+
 ## v3.11.2 (2026-03-16)
 
 ### Bug Fixes
