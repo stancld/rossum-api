@@ -365,6 +365,16 @@ class TestSchemaModels:
         dp = Datapoint(id="field1", type="string")
         assert dp.enum_value_type is None
 
+    def test_datapoint_format_default_none(self):
+        """Test format field defaults to None."""
+        dp = Datapoint(id="field1", type="string")
+        assert dp.format is None
+
+    def test_datapoint_format_from_dict(self):
+        """Test from_dict deserializes format field."""
+        dp = Datapoint.from_dict({"id": "amount", "type": "number", "format": "#,##0.#"})
+        assert dp.format == "#,##0.#"
+
     def test_schema_from_dict_with_matching(self):
         """Test full schema deserialization with matching data in API format."""
         schema_dict = {

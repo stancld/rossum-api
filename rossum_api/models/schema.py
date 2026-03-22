@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Literal, TypeAlias, TypeVar
 
 import dacite
 
@@ -68,6 +68,26 @@ class Matching:
 
     type: Literal["master_data_hub"]
     configuration: MatchingConfiguration
+
+
+# See: https://rossum.app/api/docs/guides/queue-schema
+NumberFormat: TypeAlias = Literal[
+    "# ##0,#",  # 1 234,5
+    "# ##0.#",  # 1 234.5
+    "#,##0.#",  # 1,234.5
+    "#'##0.#",  # 1'234.5
+    "#.##0,#",  # 1.234,5
+    "# ##0",  # 1 234
+    "#,##0",  # 1,234
+    "#'##0",  # 1'234
+    "#.##0",  # 1.234
+]
+
+
+# Date format = Arrow-compatible date format string (e.g. ``'YYYY-MM-DD'``, ``'DD.MM.YYYY'``).
+# Any token supported by the `Arrow <https://arrow.readthedocs.io/en/latest/#tokens>` library is valid.
+# When ``None``, ISO-8601 is assumed.
+DateFormat: TypeAlias = str
 
 
 class ValueSource(str, Enum):  # noqa: D101
@@ -176,6 +196,7 @@ class Datapoint(Node["Multivalue | Section | Tuple"]):
     context: list[str] | None = None
     matching: Matching | None = None
     enum_value_type: Literal["string", "number", "date"] | None = None
+    format: NumberFormat | DateFormat | None = None
 
     @property
     def is_button(self) -> bool:  # noqa: D102
