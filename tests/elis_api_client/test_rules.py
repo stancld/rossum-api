@@ -28,7 +28,10 @@ def dummy_rule():
         "name": "rule",
         "enabled": True,
         "organization": "https://elis.rossum.ai/api/v1/organizations/1001",
-        "schema": "https://elis.rossum.ai/api/v1/schemas/1001",
+        "queues": [
+            "https://elis.rossum.ai/api/v1/queues/101",
+            "https://elis.rossum.ai/api/v1/queues/102",
+        ],
         "trigger_condition": "True",
         "created_by": "https://elis.rossum.ai/api/v1/users/9524",
         "created_at": "2022-01-01T15:02:25.653324Z",
@@ -53,10 +56,10 @@ def dummy_rule():
 
 
 @pytest.fixture
-def dummy_rule_without_schema(dummy_rule):
-    """Creates a Rule dict without schema field (optional field)."""
+def dummy_rule_without_queues(dummy_rule):
+    """Creates a Rule dict with empty queues list."""
     rule_data = dummy_rule.copy()
-    rule_data["schema"] = None
+    rule_data["queues"] = []
     return rule_data
 
 
@@ -67,9 +70,9 @@ def expected_rule(dummy_rule):
 
 
 @pytest.fixture
-def expected_rule_without_schema(dummy_rule_without_schema):
-    """Creates a Rule object without schema."""
-    return Rule.from_dict(dummy_rule_without_schema)
+def expected_rule_without_queues(dummy_rule_without_queues):
+    """Creates a Rule object with empty queues."""
+    return Rule.from_dict(dummy_rule_without_queues)
 
 
 @pytest.mark.asyncio
@@ -102,7 +105,6 @@ class TestRules:
 
         data = {
             "name": "Test Rule",
-            "schema": "https://elis.rossum.ai/api/v1/schemas/1001",
             "trigger_condition": "True",
             "actions": [],
         }
@@ -120,7 +122,6 @@ class TestRules:
 
         data = {
             "name": "Test Rule with Formula",
-            "schema": "https://elis.rossum.ai/api/v1/schemas/1001",
             "trigger_condition": formula_condition,
             "actions": [],
         }
@@ -152,17 +153,17 @@ class TestRules:
 
         http_client.delete.assert_called_with(Resource.Rule, rid)
 
-    async def test_retrieve_rule_without_schema(
-        self, elis_client, dummy_rule_without_schema, expected_rule_without_schema
+    async def test_retrieve_rule_without_queues(
+        self, elis_client, dummy_rule_without_queues, expected_rule_without_queues
     ):
         client, http_client = elis_client
-        http_client.fetch_one.return_value = dummy_rule_without_schema
+        http_client.fetch_one.return_value = dummy_rule_without_queues
 
-        uid = dummy_rule_without_schema["id"]
+        uid = dummy_rule_without_queues["id"]
         rule = await client.retrieve_rule(uid)
 
-        assert rule == expected_rule_without_schema
-        assert rule.schema is None
+        assert rule == expected_rule_without_queues
+        assert rule.queues == []
 
         http_client.fetch_one.assert_called_with(Resource.Rule, uid)
 
@@ -196,7 +197,6 @@ class TestRulesSync:
 
         data = {
             "name": "Test Rule",
-            "schema": "https://elis.rossum.ai/api/v1/schemas/1001",
             "trigger_condition": "True",
             "actions": [],
         }
@@ -214,7 +214,6 @@ class TestRulesSync:
 
         data = {
             "name": "Test Rule with Formula",
-            "schema": "https://elis.rossum.ai/api/v1/schemas/1001",
             "trigger_condition": formula_condition,
             "actions": [],
         }
@@ -246,17 +245,17 @@ class TestRulesSync:
 
         http_client.delete.assert_called_with(Resource.Rule, rid)
 
-    def test_retrieve_rule_without_schema(
-        self, elis_client_sync, dummy_rule_without_schema, expected_rule_without_schema
+    def test_retrieve_rule_without_queues(
+        self, elis_client_sync, dummy_rule_without_queues, expected_rule_without_queues
     ):
         client, http_client = elis_client_sync
-        http_client.fetch_resource.return_value = dummy_rule_without_schema
+        http_client.fetch_resource.return_value = dummy_rule_without_queues
 
-        uid = dummy_rule_without_schema["id"]
+        uid = dummy_rule_without_queues["id"]
         rule = client.retrieve_rule(uid)
 
-        assert rule == expected_rule_without_schema
-        assert rule.schema is None
+        assert rule == expected_rule_without_queues
+        assert rule.queues == []
 
         http_client.fetch_resource.assert_called_with(Resource.Rule, uid)
 
