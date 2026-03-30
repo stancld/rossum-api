@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v3.13.1 (2026-03-30)
+
+### Bug Fixes
+
+- Add missing rule -> queue many-to-many relation
+  ([`bb00d14`](https://github.com/rossumai/rossum-api/commit/bb00d14c03e2cb9b844551d433d9cc9c46834fe6))
+
+- Remove deprecated rule -> schema relation
+  ([`8734f2c`](https://github.com/rossumai/rossum-api/commit/8734f2ceda34c27e6bfdd5705d65dacdd8c64ad7))
+
+
 ## v3.13.0 (2026-03-25)
 
 ### Features
