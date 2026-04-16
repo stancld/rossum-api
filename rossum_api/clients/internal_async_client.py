@@ -202,7 +202,11 @@ class InternalAsyncClient:
         async def _fetch_page(page_number: int) -> tuple[list[dict[str, Any]], int]:
             async with in_flight_guard:
                 return await self._fetch_page(
-                    url, method, {**query_params, "page": page_number}, sideloads, json=json
+                    url,
+                    method,
+                    {**query_params, "page": page_number, "include_total": "true"},
+                    sideloads,
+                    json=json,
                 )
 
         page_requests = [asyncio.create_task(_fetch_page(i)) for i in range(2, last_page + 1)]

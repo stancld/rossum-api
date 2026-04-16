@@ -195,8 +195,8 @@ async def test_fetch_one(client, httpx_mock):
 
 @pytest.mark.asyncio
 async def test_fetch_all(client, httpx_mock):
-    second_page = "https://elis.rossum.ai/api/v1/workspaces?page=2&page_size=100&ordering=&sideload=&content.schema_id="
-    third_page = "https://elis.rossum.ai/api/v1/workspaces?page=3&page_size=100&ordering=&sideload=&content.schema_id="
+    second_page = "https://elis.rossum.ai/api/v1/workspaces?page=2&page_size=100&ordering=&sideload=&content.schema_id=&include_total=true"
+    third_page = "https://elis.rossum.ai/api/v1/workspaces?page=3&page_size=100&ordering=&sideload=&content.schema_id=&include_total=true"
     httpx_mock.add_response(
         method="GET",
         url="https://elis.rossum.ai/api/v1/workspaces?page_size=100&ordering=&include_total=true&sideload=&content.schema_id=",
@@ -344,7 +344,7 @@ async def test_fetch_all_limit_in_flight_requests(client, httpx_mock):
     page_count = 10
     page_url = "https://elis.rossum.ai/api/v1/workspaces?page_size=100&ordering=&include_total=true&sideload=&content.schema_id="
     for i in range(2, page_count + 1):
-        next_page_url = f"https://elis.rossum.ai/api/v1/workspaces?page={i}&page_size=100&ordering=&sideload=&content.schema_id="
+        next_page_url = f"https://elis.rossum.ai/api/v1/workspaces?page={i}&page_size=100&ordering=&sideload=&content.schema_id=&include_total=true"
         httpx_mock.add_response(
             method="GET",
             url=page_url,
@@ -496,13 +496,13 @@ async def test_upload(client, httpx_mock):
             {},
             "GET",
             "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&columns=col1%2Ccol2&id=456%2C789&ordering=&include_total=true&sideload=&content.schema_id=",
-            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&columns=col1%2Ccol2&id=456%2C789&ordering=&sideload=&content.schema_id=",
+            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&include_total=true&columns=col1%2Ccol2&id=456%2C789&ordering=&sideload=&content.schema_id=",
         ),
         (
             {"to_status": "exported"},
             "POST",
             "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&include_total=true&sideload=&content.schema_id=",
-            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&sideload=&content.schema_id=",
+            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&include_total=true&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&sideload=&content.schema_id=",
         ),
     ],
 )

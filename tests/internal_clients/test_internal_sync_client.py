@@ -176,8 +176,8 @@ def test_fetch_resource(client, httpx_mock):
 
 def test_fetch_resources(client, httpx_mock):
     first_page = "https://elis.rossum.ai/api/v1/workspaces?page_size=100&ordering=&include_total=true&sideload=&content.schema_id="
-    second_page = "https://elis.rossum.ai/api/v1/workspaces?page=2&page_size=100&ordering=&sideload=&content.schema_id="
-    third_page = "https://elis.rossum.ai/api/v1/workspaces?page=3&page_size=100&ordering=&sideload=&content.schema_id="
+    second_page = "https://elis.rossum.ai/api/v1/workspaces?page=2&page_size=100&ordering=&sideload=&content.schema_id=&include_total=true"
+    third_page = "https://elis.rossum.ai/api/v1/workspaces?page=3&page_size=100&ordering=&sideload=&content.schema_id=&include_total=true"
     httpx_mock.add_response(
         method="GET",
         url=first_page,
@@ -414,13 +414,13 @@ def test_upload(client, httpx_mock):
             {},
             "GET",
             "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&include_total=true&columns=col1%2Ccol2&id=456%2C789&ordering=&sideload=&content.schema_id=",
-            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&columns=col1%2Ccol2&id=456%2C789&ordering=&sideload=&content.schema_id=",
+            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&include_total=true&columns=col1%2Ccol2&id=456%2C789&ordering=&sideload=&content.schema_id=",
         ),
         (
             {"to_status": "exported"},
             "POST",
             "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&include_total=true&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&sideload=&content.schema_id=",
-            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&sideload=&content.schema_id=",
+            "https://elis.rossum.ai/api/v1/queues/123/export?format=json&page_size=100&page=2&include_total=true&columns=col1%2Ccol2&id=456%2C789&to_status=exported&ordering=&sideload=&content.schema_id=",
         ),
     ],
 )
