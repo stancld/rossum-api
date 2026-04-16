@@ -227,7 +227,11 @@ class InternalSyncClient:  # noqa: D101
 
         for page_number in range(2, last_page + 1):
             results, _ = self._fetch_page(
-                url, method, {**query_params, "page": page_number}, sideloads, json=json
+                url,
+                method,
+                {**query_params, "page": page_number, "include_total": "true"},
+                sideloads,
+                json=json,
             )
             yield from results
 
