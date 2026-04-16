@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v3.13.2 (2026-04-16)
+
+### Bug Fixes
+
+- Pass include_total on all paginated requests
+  ([`40bae3b`](https://github.com/rossumai/rossum-api/commit/40bae3be51523c972900f516bfca19050e7c7cc2))
+
+
 ## v3.13.1 (2026-03-30)
 
 ### Bug Fixes
